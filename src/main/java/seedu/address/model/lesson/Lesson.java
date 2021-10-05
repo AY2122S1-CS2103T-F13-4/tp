@@ -113,6 +113,18 @@ public class Lesson {
     }
 
     /**
+     * Returns true if both lessons have the same lesson code.
+     * This defines a weaker notion of equality between two lessons.
+     */
+    public boolean isSameLesson(Lesson otherLesson) {
+        if (otherLesson == this) {
+            return true;
+        }
+        return otherLesson != null
+                && otherLesson.getLessonCode().equals(getLessonCode());
+    }
+    
+    /**
      * Returns formatted lesson code string.
      */
     public String getLessonCode() {
