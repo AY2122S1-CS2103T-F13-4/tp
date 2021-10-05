@@ -8,7 +8,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
@@ -122,7 +121,6 @@ public class Lesson {
         if (testCode == null) {
             return false;
         }
-
         // check number of parameters in lesson code
         String[] testLessonParams = testCode.split("-");
         if (testLessonParams.length == 4 || testLessonParams[1].length() == 2) {
@@ -132,9 +130,8 @@ public class Lesson {
         try {
             // attempt to parse
             Integer.parseInt("" + testLessonParams[1].charAt(1));
-            DayOfWeek.valueOf(testLessonParams[2].toUpperCase(Locale.ROOT));
+            DayOfWeek.valueOf(testLessonParams[2]);
             LocalTime.parse(testLessonParams[3]);
-
         } catch (IllegalArgumentException | DateTimeParseException e) {
             return false;
         }
@@ -178,9 +175,8 @@ public class Lesson {
 
         // extract and parse relevant fields for a lesson instance
         String subject = lessonParams[0];
-        Grade grade = new Grade("" + lessonParams[1].charAt(0),
-                Integer.parseInt("" + lessonParams[1].charAt(1)));
-        DayOfWeek day = DayOfWeek.valueOf(lessonParams[2].toUpperCase(Locale.ROOT));
+        Grade grade = new Grade("" + lessonParams[1].charAt(0), Integer.parseInt("" + lessonParams[1].charAt(1)));
+        DayOfWeek day = DayOfWeek.valueOf(lessonParams[2]);
         LocalTime startTime = LocalTime.parse(lessonParams[3]);
         double price = 0.0; // mock value
 
