@@ -5,8 +5,10 @@ import static seedu.tuitione.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
@@ -26,9 +28,10 @@ public class Lesson {
     public static final String SUBJECT_MESSAGE_CONSTRAINTS = "Subject names should be alphanumeric";
     public static final String TIME_MESSAGE_CONSTRAINTS = "Lesson can only start be between 9 am to 8 pm";
     public static final String PRICE_MESSAGE_CONSTRAINT = "Price cannot be 0 or negative";
+    public static final String CODE_MESSAGE_CONSTRAINT = "Lesson code should be of correct format";
 
-    public static final LocalTime BOUNDED_START_TIME = LocalTime.of(9, 0); // 9 am
-    public static final LocalTime BOUNDED_END_TIME = LocalTime.of(8 + 12, 0); // 8 pm
+    public static final LocalTime BOUNDED_START_TIME = LocalTime.parse("09:00");
+    public static final LocalTime BOUNDED_END_TIME = LocalTime.parse("20:00");
 
     private final String subject;
     private final Grade grade;
@@ -106,10 +109,43 @@ public class Lesson {
     }
 
     /**
-     * Returns true if a given price is more than 0.
+     * Returns true if a given price is at least 0.
      */
     public static boolean isValidPrice(double testPrice) {
-        return (testPrice > 0.0);
+        return (testPrice >= 0.0);
+    }
+
+    /**
+     * Returns true if a given lesson code is follows the correct format.
+     */
+    public static boolean isValidLessonCode(String testCode) {
+        if (testCode == null) {
+            return false;
+        }
+
+        // check number of parameters in lesson code
+        String[] testLessonParams = testCode.split("-");
+        if (testLessonParams.length == 4 || testLessonParams[1].length() == 2) {
+            return false;
+        }
+
+        try {
+            // attempt to parse
+            Integer.parseInt("" + testLessonParams[1].charAt(1));
+            DayOfWeek.valueOf(testLessonParams[2].toUpperCase(Locale.ROOT));
+            LocalTime.parse(testLessonParams[3]);
+
+        } catch (IllegalArgumentException | DateTimeParseException e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Returns formatted lesson code string.
+     */
+    public String getLessonCode() {
+        return String.format("%s-%s-%s-%s", subject, grade, day, startTime);
     }
 
     /**
@@ -125,10 +161,30 @@ public class Lesson {
     }
 
     /**
-     * Returns formatted lesson code string.
+     * Returns true if instance lesson code and requested lesson code are the same.
      */
-    public String getLessonCode() {
-        return String.format("%s-%s-%s-%s", subject, grade, day, startTime);
+    public boolean isSameLessonUsingCode(String otherLessonCode) {
+        checkArgument(isValidLessonCode(otherLessonCode), CODE_MESSAGE_CONSTRAINT);
+        return getLessonCode().equals(otherLessonCode);
+    }
+
+    /**
+     * Returns a weak form of lesson from a given lesson code
+     * for weak equality check @link #isSameLesson(Lesson).
+     */
+    public static Lesson getWeakLessonFromCode(String code) {
+        checkArgument(isValidLessonCode(code), CODE_MESSAGE_CONSTRAINT);
+        String[] lessonParams = code.split("-");
+
+        // extract and parse relevant fields for a lesson instance
+        String subject = lessonParams[0];
+        Grade grade = new Grade("" + lessonParams[1].charAt(0),
+                Integer.parseInt("" + lessonParams[1].charAt(1)));
+        DayOfWeek day = DayOfWeek.valueOf(lessonParams[2].toUpperCase(Locale.ROOT));
+        LocalTime startTime = LocalTime.parse(lessonParams[3]);
+        double price = 0.0; // mock value
+
+        return new Lesson(subject, grade, day, startTime, price);
     }
 
     @Override
@@ -148,12 +204,10 @@ public class Lesson {
                 && day.equals(otherLesson.day)
                 && startTime.equals(otherLesson.startTime)
                 && (price == otherLesson.price);
-        // todo consider if students list should be in this
     }
 
     @Override
     public int hashCode() {
-        // todo consider if students list should be in this
         return Objects.hash(subject, grade, day, startTime, price);
     }
 
