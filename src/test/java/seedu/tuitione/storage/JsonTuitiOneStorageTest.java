@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import seedu.tuitione.commons.exceptions.DataConversionException;
-import seedu.tuitione.model.TuitiOne;
 import seedu.tuitione.model.ReadOnlyTuitiOne;
+import seedu.tuitione.model.TuitiOne;
 
 public class JsonTuitiOneStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonTuitiOneStorageTest");

@@ -123,7 +123,7 @@ public class Lesson {
         return otherLesson != null
                 && otherLesson.getLessonCode().equals(getLessonCode());
     }
-    
+
     /**
      * Returns formatted lesson code string.
      */

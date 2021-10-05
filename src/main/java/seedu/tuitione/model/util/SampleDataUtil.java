@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import seedu.tuitione.model.TuitiOne;
 import seedu.tuitione.model.ReadOnlyTuitiOne;
+import seedu.tuitione.model.TuitiOne;
 import seedu.tuitione.model.person.Address;
 import seedu.tuitione.model.person.Email;
 import seedu.tuitione.model.person.Name;

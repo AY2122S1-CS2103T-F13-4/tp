@@ -9,8 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import seedu.tuitione.commons.exceptions.IllegalValueException;
-import seedu.tuitione.model.TuitiOne;
 import seedu.tuitione.model.ReadOnlyTuitiOne;
+import seedu.tuitione.model.TuitiOne;
 import seedu.tuitione.model.person.Person;
 
 /**

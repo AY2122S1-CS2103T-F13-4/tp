@@ -5,9 +5,9 @@ import static seedu.tuitione.testutil.TypicalPersons.getTypicalTuitiOne;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.tuitione.model.TuitiOne;
 import seedu.tuitione.model.Model;
 import seedu.tuitione.model.ModelManager;
+import seedu.tuitione.model.TuitiOne;
 import seedu.tuitione.model.UserPrefs;
 
 public class ClearCommandTest {

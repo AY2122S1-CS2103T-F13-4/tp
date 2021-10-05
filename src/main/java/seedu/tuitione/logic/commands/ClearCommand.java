@@ -2,8 +2,8 @@ package seedu.tuitione.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.tuitione.model.TuitiOne;
 import seedu.tuitione.model.Model;
+import seedu.tuitione.model.TuitiOne;
 
 /**
  * Clears the tuitione book.

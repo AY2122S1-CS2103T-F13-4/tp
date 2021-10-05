@@ -15,8 +15,8 @@ import java.util.List;
 
 import seedu.tuitione.commons.core.index.Index;
 import seedu.tuitione.logic.commands.exceptions.CommandException;
-import seedu.tuitione.model.TuitiOne;
 import seedu.tuitione.model.Model;
+import seedu.tuitione.model.TuitiOne;
 import seedu.tuitione.model.person.NameContainsKeywordsPredicate;
 import seedu.tuitione.model.person.Person;
 import seedu.tuitione.testutil.EditPersonDescriptorBuilder;

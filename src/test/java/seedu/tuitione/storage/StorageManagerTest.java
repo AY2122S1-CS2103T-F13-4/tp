@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import seedu.tuitione.commons.core.GuiSettings;
-import seedu.tuitione.model.TuitiOne;
 import seedu.tuitione.model.ReadOnlyTuitiOne;
+import seedu.tuitione.model.TuitiOne;
 import seedu.tuitione.model.UserPrefs;
 
 public class StorageManagerTest {
