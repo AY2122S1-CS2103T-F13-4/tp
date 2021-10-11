@@ -132,7 +132,7 @@ public class ModelManager implements Model {
         updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //=========== Filtered Person and Lesson List Accessors ======================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
@@ -163,6 +163,11 @@ public class ModelManager implements Model {
     public void updateFilteredLessonList(Predicate<Lesson> predicate) {
         requireNonNull(predicate);
         filteredLessons.setPredicate(predicate);
+    }
+
+    @Override
+    public ObservableList<Lesson> getFilteredLessonList() {
+        return filteredLessons;
     }
 
     @Override
