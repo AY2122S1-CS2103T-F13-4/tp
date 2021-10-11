@@ -13,11 +13,15 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
+import seedu.address.model.lesson.Lesson;
+import seedu.address.model.person.Grade;
 import seedu.address.model.person.Student;
 
 /**
@@ -60,6 +64,17 @@ public class TypicalPersons {
             .withGrade(VALID_GRADE_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 
+    public static final Lesson LESSON_ONE = new Lesson("Science",
+            new Grade("P2"),
+            DayOfWeek.WEDNESDAY,
+            LocalTime.of(12, 30),
+            0.0);
+    public static final Lesson LESSON_TWO = new Lesson("Mathematics",
+            new Grade("S2"),
+            DayOfWeek.TUESDAY,
+            LocalTime.of(9, 30),
+            15.3);
+
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
     private TypicalPersons() {} // prevents instantiation
@@ -72,10 +87,17 @@ public class TypicalPersons {
         for (Student student : getTypicalPersons()) {
             ab.addPerson(student);
         }
+        for (Lesson lesson : getTypicalLessons()) {
+            ab.addLesson(lesson);
+        }
         return ab;
     }
 
     public static List<Student> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    public static List<Lesson> getTypicalLessons() {
+        return new ArrayList<>(Arrays.asList(LESSON_ONE, LESSON_TWO));
     }
 }

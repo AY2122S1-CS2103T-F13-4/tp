@@ -58,7 +58,7 @@ public class AddCommandParserTest {
 
         // multiple names - last name accepted
         assertParseSuccess(parser, NAME_DESC_AMY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + GRADE_DESC_AMY + TAG_DESC_FRIEND, new AddCommand(expectedStudent));
+                + ADDRESS_DESC_BOB + GRADE_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedStudent));
 
         // multiple phones - last phone accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_BOB

@@ -146,7 +146,6 @@ public class ModelManager implements Model {
     /**
      * Returns an unmodifiable view of the list of {@code Lesson} backed by the internal list of
      * {@code versionedTuitiONE}
-     * @return
      */
     @Override
     public ObservableList<Lesson> getFilteredLessonList() {
@@ -163,11 +162,6 @@ public class ModelManager implements Model {
     public void updateFilteredLessonList(Predicate<Lesson> predicate) {
         requireNonNull(predicate);
         filteredLessons.setPredicate(predicate);
-    }
-
-    @Override
-    public ObservableList<Lesson> getFilteredLessonList() {
-        return filteredLessons;
     }
 
     @Override

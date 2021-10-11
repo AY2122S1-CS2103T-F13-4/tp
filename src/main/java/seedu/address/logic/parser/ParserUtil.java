@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LESSON;
 import static seedu.address.model.lesson.Lesson.TIME_FORMATTER;
 import static seedu.address.model.lesson.Lesson.parseStringToDayOfWeek;
@@ -189,7 +190,7 @@ public class ParserUtil {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(UnenrollCommand.MESSAGE_USAGE, pe);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnenrollCommand.MESSAGE_USAGE, pe));
         }
 
         if (argMultimap.getValue(PREFIX_LESSON).isPresent()) {
@@ -211,7 +212,7 @@ public class ParserUtil {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(EnrollCommand.MESSAGE_USAGE, pe);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EnrollCommand.MESSAGE_USAGE), pe);
         }
 
         if (argMultimap.getValue(PREFIX_LESSON).isPresent()) {

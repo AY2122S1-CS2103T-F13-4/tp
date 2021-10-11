@@ -129,6 +129,7 @@ public class Student {
                 && otherStudent.getParentContact().equals(getParentContact())
                 && otherStudent.getEmail().equals(getEmail())
                 && otherStudent.getAddress().equals(getAddress())
+                && otherStudent.getGrade().equals(getGrade())
                 && otherStudent.getTags().equals(getTags())
                 && otherStudent.getEnrolledLessonCodes().equals(getEnrolledLessonCodes());
     }
@@ -148,7 +149,9 @@ public class Student {
                 .append("; Email: ")
                 .append(getEmail())
                 .append("; Address: ")
-                .append(getAddress());
+                .append(getAddress())
+                .append("; Grade: ")
+                .append(getGrade());
 
         Set<Tag> tags = getTags();
         if (!tags.isEmpty()) {

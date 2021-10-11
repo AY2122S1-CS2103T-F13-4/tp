@@ -37,6 +37,7 @@ public class Lesson {
     public static final String CODE_MESSAGE_CONSTRAINT = "Lesson code should be of correct format";
     public static final String DAY_MESSAGE_CONSTRAINT = "Day specified is not legitimate";
     public static final String ENROLLMENT_MESSAGE_CONSTRAINT = "Student is unable to enroll for this lesson";
+    public static final String STUDENT_NOT_ENROLLED = "%1$s is not enrolled for %2$s";
     public static final String SUBJECT_MESSAGE_CONSTRAINTS = "Subject names should be alphanumeric and"
             + "within %1$d characters";
 
@@ -187,7 +188,9 @@ public class Lesson {
      * and must not be already enrolled to the lesson.
      */
     public boolean isAbleToEnroll(Student student) {
-        requireNonNull(student);
+        if (student == null) {
+            return false;
+        }
         if (containsStudent(student)) {
             return false;
         }
@@ -203,6 +206,21 @@ public class Lesson {
     }
 
     /**
+     * Returns true if a student is eligible to unenroll from the lesson.
+     * A student must be already enrolled to the lesson.
+     * @param student the student to unenroll from this lesson.
+     * @return a boolean to represent whether the student can be unenrolled from the lesson.
+     */
+    public boolean isAbleToUnenroll(Student student) {
+        requireNonNull(student);
+        if (containsStudent(student)) {
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
      * Returns true if the lessons overlap in timing and day.
      */
     public boolean hasOverlappedTiming(Lesson otherLesson) {
@@ -211,12 +229,13 @@ public class Lesson {
 
         boolean isClashingStartTime = (otherStartTime.isAfter(startTime) && otherStartTime.isBefore(endTime));
         boolean isClashingEndTime = (otherEndTime.isAfter(startTime) && otherEndTime.isBefore(endTime));
+        boolean isSameTiming = (otherStartTime.equals(startTime)); // end time implied as same due to fixed timing
         boolean isOnSameDay = otherLesson.getDayOfWeek().equals(dayOfWeek);
 
         if (!isOnSameDay) {
             return false;
         }
-        return (isClashingStartTime || isClashingEndTime);
+        return (isClashingStartTime || isClashingEndTime || isSameTiming);
     }
 
     /**
@@ -248,30 +267,30 @@ public class Lesson {
      */
     public void removeStudent(Student student) {
         requireNonNull(student);
+        checkArgument(isAbleToUnenroll(student), String.format(STUDENT_NOT_ENROLLED, student, this));
+        students.remove(student);
         student.unenrollFromLesson(this);
-        // this step is needed to break out of the equality checks before deletion
-        for (Student s : students) {
-            if (s.isSamePerson(student)) {
-                students.remove(s);
-                return;
-            }
-        }
     }
 
     /**
      * Returns true if a given string is a valid subject name for a lesson.
      */
-    public static boolean isValidSubject(String test) {
-        requireNonNull(test);
-        return test.matches(SUBJECT_VALIDATION_REGEX)
-                && (test.length() <= MAXIMUM_SUBJECT_LENGTH);
+    public static boolean isValidSubject(String testSubject) {
+        if (testSubject == null) {
+            return false;
+        }
+        return testSubject.matches(SUBJECT_VALIDATION_REGEX)
+                && (testSubject.length() <= MAXIMUM_SUBJECT_LENGTH)
+                && (!testSubject.isEmpty());
     }
 
     /**
      * Returns true if a given timings are within bounded limits.
      */
     public static boolean isValidTime(LocalTime testStart) {
-        requireNonNull(testStart);
+        if (testStart == null) {
+            return false;
+        }
         return testStart.equals(BOUNDED_START_TIME)
                 || testStart.equals(BOUNDED_END_TIME)
                 || (testStart.isAfter(BOUNDED_START_TIME) && testStart.isBefore(BOUNDED_END_TIME));
@@ -288,7 +307,9 @@ public class Lesson {
      * Returns true if a given lesson code is follows the correct format.
      */
     public static boolean isValidLessonCode(String testCode) {
-        requireNonNull(testCode);
+        if (testCode == null) {
+            return false;
+        }
         // check number of parameters in lesson code
         String[] testLessonParams = testCode.split("-");
         if (testLessonParams.length != 4) {

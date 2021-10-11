@@ -24,7 +24,7 @@ public class EnrollCommand extends Command {
 
     public static final String MESSAGE_STUDENT_IN_LESSON = "%1$s is already enrolled in the existing %2$s";
     public static final String MESSAGE_LESSON_NOT_FOUND = "Lesson does not exist, please try again";
-    public static final String MESSAGE_SUCCESS = "New %1$s enrolled into lesson: %2$s";
+    public static final String MESSAGE_SUCCESS = "%1$s enrolled into lesson: %2$s";
 
     private final Index index;
     private final String lessonCode;
@@ -68,7 +68,7 @@ public class EnrollCommand extends Command {
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof EnrollCommand
-                && index.equals(((EnrollCommand) other).index))
-                && lessonCode.equals(((EnrollCommand) other).lessonCode);
+                && index.equals(((EnrollCommand) other).index)
+                && lessonCode.equals(((EnrollCommand) other).lessonCode));
     }
 }
