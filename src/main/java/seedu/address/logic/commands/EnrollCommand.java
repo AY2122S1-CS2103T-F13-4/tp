@@ -9,6 +9,8 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.person.Student;
 
@@ -60,7 +62,8 @@ public class EnrollCommand extends Command {
                     lesson));
         }
         lesson.addStudent(student);
-
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
         return new CommandResult(String.format(MESSAGE_SUCCESS, student.getName(), lesson));
     }
 
