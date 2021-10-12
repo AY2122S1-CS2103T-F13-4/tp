@@ -1,13 +1,17 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_IMPROPER_ASSOCIATIONS;
 
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.lesson.Lesson;
+import seedu.address.model.lesson.LessonCode;
 import seedu.address.model.person.Student;
 
 /**
@@ -38,8 +42,16 @@ public class DeleteCommand extends Command {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-
         Student studentToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        Set<LessonCode> lessonCodes = studentToDelete.getLessonCodes();
+        while (!lessonCodes.isEmpty()) {
+            LessonCode code = lessonCodes.iterator().next();
+            Lesson toUnenroll = model.searchLessons(code)
+                    .orElseThrow(() -> new AssertionError(MESSAGE_IMPROPER_ASSOCIATIONS));
+            toUnenroll.removeStudent(studentToDelete);
+        }
+
         model.deletePerson(studentToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, studentToDelete));
     }
