@@ -13,4 +13,5 @@ public class Messages {
     public static final String MESSAGE_INVALID_LESSON_DISPLAYED_INDEX = "The lesson index provided is invalid";
     public static final String MESSAGE_PLURAL_STUDENT_LISTED_OVERVIEW = "%1$d student(s) found!";
     public static final String MESSAGE_SINGULAR_STUDENT_LISTED_OVERVIEW = "%1$d student found!";
+    public static final String MESSAGE_IMPROPER_ASSOCIATIONS = "Lessons should be properly initialised and associated";
 }
